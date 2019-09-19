@@ -98,23 +98,25 @@ const appendRegulationsTips = () => {
     // if DOM changes (except Tippy and WCA Regulations Finder), re-append new tips and remove unnecessary tips
     //console.log('Setting up an observer......');
     observer = new MutationObserver((records) => {
-        // When Tippy added
-        if ((records.length === 1)
-                && (records[0].type === 'childList')
-                && (records[0].addedNodes.length === 1)
-                && (records[0].addedNodes[0].classList.contains(tippyClassName))
-                && (records[0].removedNodes.length === 0)) {
-            //console.log('Tippy added');
-            return;
-        }
-        // When Tippy removed
-        if ((records.length === 1)
-                && (records[0].type === 'childList')
-                && (records[0].addedNodes.length === 0)
-                && (records[0].removedNodes.length === 1)
-                && (records[0].removedNodes[0].classList.contains(tippyClassName))) {
-            //console.log('Tippy removed');
-            return;
+        if ((records.length === 1) && (records[0].type === 'childList')) {
+            // When Tippy added
+            if ((records[0].addedNodes.length === 1) && (records[0].removedNodes.length === 0)) {
+                if (records[0].addedNodes[0].classList) {
+                    if (records[0].addedNodes[0].classList.contains(tippyClassName)) {
+                        //console.log('Tippy added');
+                        return;
+                    }
+                }
+            }
+            // When Tippy removed
+            if ((records[0].addedNodes.length === 0) && (records[0].removedNodes.length === 1)) {
+                if (records[0].removedNodes[0].classList) {
+                    if (records[0].removedNodes[0].classList.contains(tippyClassName)) {
+                        //console.log('Tippy removed');
+                        return;
+                    }
+                }
+            }
         }
 
         appendRegulationsTips();
