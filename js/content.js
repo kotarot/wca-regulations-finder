@@ -14,7 +14,7 @@ let observer = null;
 
 // Append Regulations/Guidelines Tooltips!
 const appendRegulationsTips = () => {
-    console.log('Start appending Regulations tips......');
+    //console.log('Start appending Regulations tips......');
     if (observer !== null) {
         observer.disconnect();
     }
@@ -92,11 +92,11 @@ const appendRegulationsTips = () => {
             theme: themeClassName,
         });
     }
-    console.log('Finish appending Regulations tips.');
+    //console.log('Finish appending Regulations tips.');
 
     // Mutation Observer for DOM
     // if DOM changes (except Tippy and WCA Regulations Finder), re-append new tips and remove unnecessary tips
-    console.log('Setting up an observer......');
+    //console.log('Setting up an observer......');
     observer = new MutationObserver((records) => {
         // When Tippy added
         if ((records.length === 1)
@@ -104,7 +104,7 @@ const appendRegulationsTips = () => {
                 && (records[0].addedNodes.length === 1)
                 && (records[0].addedNodes[0].classList.contains(tippyClassName))
                 && (records[0].removedNodes.length === 0)) {
-            console.log('Tippy added');
+            //console.log('Tippy added');
             return;
         }
         // When Tippy removed
@@ -113,7 +113,7 @@ const appendRegulationsTips = () => {
                 && (records[0].addedNodes.length === 0)
                 && (records[0].removedNodes.length === 1)
                 && (records[0].removedNodes[0].classList.contains(tippyClassName))) {
-            console.log('Tippy removed');
+            //console.log('Tippy removed');
             return;
         }
 
@@ -124,7 +124,7 @@ const appendRegulationsTips = () => {
         childList: true,
         subtree: true
     });
-    console.log('Started the observer.');
+    //console.log('Started the observer.');
 
 };
 
@@ -135,7 +135,7 @@ chrome.runtime.sendMessage({want: 'all'}, (response) => {
     guidelines = response.guidelines;
     //console.log(regulations);
     //console.log(guidelines);
-    console.log('Got the Regulations and Guidelines');
+    //console.log('Got the Regulations and Guidelines');
 
     // Regulations numbers sorted by their lengths
     regnumsSortedByLen = Object.keys(regulations);
