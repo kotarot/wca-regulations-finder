@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "WCA Regulations Finder",
-    "description": "WCA Regulations and Guidelines are highlighted and show up when you hover a Regulation number.",
+    "description": "WCA Regulations and Guidelines show up when you hover a highlighted Regulation number.",
     "version": "0.0.1",
     "icons": {
         "128": "icon/icon-128.png"
