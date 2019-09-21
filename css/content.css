@@ -1,0 +1,18 @@
+.wca-regulations-finder {
+    background: linear-gradient(transparent 0%, #ffc31e 0%);
+    color: #111;
+}
+
+.tippy-tooltip.wca-regulations-finder-theme {
+    text-align: left;
+    font-size: 14px;
+}
+
+.tippy-tooltip.wca-regulations-finder-theme a {
+    color: #e64503;
+}
+
+.tippy-tooltip.wca-regulations-finder-theme p.wca-regulations-finder-text {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
