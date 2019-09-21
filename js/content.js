@@ -1,10 +1,12 @@
 'use strict';
 
 const regulationsUrl = 'https://www.worldcubeassociation.org/regulations/';
-const guidelinesUrl = 'https://www.worldcubeassociation.org/guidelines/';
+const guidelinesUrl = 'https://www.worldcubeassociation.org/regulations/guidelines/';
 
 const tippyClassName = 'tippy-popper';
 const themeClassName = 'wca-regulations-finder';
+
+const targetBlank = 'target="_blank" rel="noopener noreferrer"';
 
 let regulations = {};
 let guidelines = {};
@@ -77,10 +79,10 @@ const appendRegulationsTips = () => {
     }
     for (const num of appearNums) {
         let regContent = '';
-        regContent += `<strong><a href="${regulationsUrl}#${num}" class="${themeClassName}-num">${num}</a></strong>`
+        regContent += `<strong><a href="${regulationsUrl}#${num}" class="${themeClassName}-num" ${targetBlank}>${num}</a></strong>`
                 + convertMd(regulations[num]);
         for (const gNum in guidelines[num]) {
-            regContent += `<strong><a href="${guidelinesUrl}#${num}" class="${themeClassName}-num">${gNum}</a></strong>`
+            regContent += `<strong><a href="${guidelinesUrl}#${gNum}" class="${themeClassName}-num" ${targetBlank}>${gNum}</a></strong>`
                     + convertMd(guidelines[num][gNum]);
         }
         tippy(`.${themeClassName}-${num}`, {
@@ -164,5 +166,7 @@ const convertMd = (markdown) => {
     markdown = markdown.replace('regulations:article:', regulationsUrl + '#');
     markdown = markdown.replace('regulations:regulation:', regulationsUrl + '#');
     markdown = markdown.replace('guidelines:guideline:', guidelinesUrl + '#');
-    return marked(markdown);
+    let html = marked(markdown);
+    html = html.replace('<a ', `<a ${targetBlank} `);
+    return html;
 }
