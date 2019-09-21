@@ -24,7 +24,8 @@ const appendRegulationsTips = () => {
     // Retrieve all text nodes by TreeWalker, and search for nodes that
     // - are not input or script tags,
     // - are not already marked words,
-    // - are not Tippy, and
+    // - are not Tippy,
+    // - do not have a contenteditable attribute, and
     // - contain at least one word likely Regulations number by RegExp
     const rejectTags = [
         'input', 'textarea',
@@ -37,6 +38,9 @@ const appendRegulationsTips = () => {
                 return NodeFilter.FILTER_REJECT;
             }
             if (node.classList.contains(themeClassName) || node.classList.contains(tippyClassName)) {
+                return NodeFilter.FILTER_REJECT;
+            }
+            if (node.getAttribute('contenteditable') === 'true') {
                 return NodeFilter.FILTER_REJECT;
             }
         } else if (node.nodeType === Node.TEXT_NODE) {
