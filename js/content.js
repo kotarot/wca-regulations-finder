@@ -31,7 +31,7 @@ const appendRegulationsTips = () => {
         'input', 'textarea',
         'audio', 'canvas', 'img', 'map', 'noscript', 'object', 'script', 'style', 'svg', 'video'
     ];
-    const re = /([1-9][0-9]?[a-z][1-9]?[0-9]?[a-z]?|[A-Z][1-9][0-9]?[a-z]?[1-9]?[0-9]?)/;
+    const re = /\b([1-9][0-9]?[a-z][1-9]?[0-9]?[a-z]?|[A-Z][1-9][0-9]?[a-z]?[1-9]?[0-9]?)\+*\b/;
     const tw = document.createTreeWalker(document.body, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT, (node) => {
         if (node.nodeType === Node.ELEMENT_NODE) {
             if (rejectTags.includes(node.nodeName.toLowerCase())) {
