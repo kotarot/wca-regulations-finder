@@ -11,11 +11,12 @@ It works on any web pages.
 
 ## Chrome Web Store
 
-TBD
+https://chrome.google.com/webstore/detail/wca-regulations-finder/jdjkdplpmjoolpocgfggceijapefdfpf
 
 
 ## Future work
 
-- Dealing with the translation
-- Adding tests
+- Deal with word boundary
+- Deal with the translations
+- Add tests
 - CI/CD
