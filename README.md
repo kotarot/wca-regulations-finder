@@ -1,6 +1,7 @@
 # wca-regulations-finder
 
-WCA Regulations Finder is a Chrome Extension in which WCA Regulations and Guidelines are highlighted and show up when you hover a Regulation number.
+WCA Regulations Finder is a Chrome Extension in which WCA Regulations and Guidelines show up when you hover a highlighted Regulation number.
+It works on any web pages.
 
 
 ## Demo
@@ -10,11 +11,12 @@ WCA Regulations Finder is a Chrome Extension in which WCA Regulations and Guidel
 
 ## Chrome Web Store
 
-TBD
+https://chrome.google.com/webstore/detail/wca-regulations-finder/jdjkdplpmjoolpocgfggceijapefdfpf
 
 
 ## Future work
 
-- Dealing with the translation
-- Adding tests
+- Deal with word boundary
+- Deal with the translations
+- Add tests
 - CI/CD

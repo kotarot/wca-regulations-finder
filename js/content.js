@@ -1,10 +1,12 @@
 'use strict';
 
 const regulationsUrl = 'https://www.worldcubeassociation.org/regulations/';
-const guidelinesUrl = 'https://www.worldcubeassociation.org/guidelines/';
+const guidelinesUrl = 'https://www.worldcubeassociation.org/regulations/guidelines/';
 
 const tippyClassName = 'tippy-popper';
 const themeClassName = 'wca-regulations-finder';
+
+const targetBlank = 'target="_blank" rel="noopener noreferrer"';
 
 let regulations = {};
 let guidelines = {};
@@ -22,19 +24,23 @@ const appendRegulationsTips = () => {
     // Retrieve all text nodes by TreeWalker, and search for nodes that
     // - are not input or script tags,
     // - are not already marked words,
-    // - are not Tippy, and
+    // - are not Tippy,
+    // - do not have a contenteditable attribute, and
     // - contain at least one word likely Regulations number by RegExp
     const rejectTags = [
         'input', 'textarea',
         'audio', 'canvas', 'img', 'map', 'noscript', 'object', 'script', 'style', 'svg', 'video'
     ];
-    const re = /([1-9][0-9]?[a-z][1-9]?[0-9]?[a-z]?|[A-Z][1-9][0-9]?[a-z]?[1-9]?[0-9]?)/;
+    const re = /\b([1-9][0-9]?[a-z][1-9]?[0-9]?[a-z]?|[A-Z][1-9][0-9]?[a-z]?[1-9]?[0-9]?)\+*\b/;
     const tw = document.createTreeWalker(document.body, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT, (node) => {
         if (node.nodeType === Node.ELEMENT_NODE) {
             if (rejectTags.includes(node.nodeName.toLowerCase())) {
                 return NodeFilter.FILTER_REJECT;
             }
             if (node.classList.contains(themeClassName) || node.classList.contains(tippyClassName)) {
+                return NodeFilter.FILTER_REJECT;
+            }
+            if (node.getAttribute('contenteditable') === 'true') {
                 return NodeFilter.FILTER_REJECT;
             }
         } else if (node.nodeType === Node.TEXT_NODE) {
@@ -77,10 +83,10 @@ const appendRegulationsTips = () => {
     }
     for (const num of appearNums) {
         let regContent = '';
-        regContent += `<strong><a href="${regulationsUrl}#${num}" class="${themeClassName}-num">${num}</a></strong>`
+        regContent += `<strong><a href="${regulationsUrl}#${num}" class="${themeClassName}-num" ${targetBlank}>${num}</a></strong>`
                 + convertMd(regulations[num]);
         for (const gNum in guidelines[num]) {
-            regContent += `<strong><a href="${guidelinesUrl}#${num}" class="${themeClassName}-num">${gNum}</a></strong>`
+            regContent += `<strong><a href="${guidelinesUrl}#${gNum}" class="${themeClassName}-num" ${targetBlank}>${gNum}</a></strong>`
                     + convertMd(guidelines[num][gNum]);
         }
         tippy(`.${themeClassName}-${num}`, {
@@ -164,5 +170,7 @@ const convertMd = (markdown) => {
     markdown = markdown.replace('regulations:article:', regulationsUrl + '#');
     markdown = markdown.replace('regulations:regulation:', regulationsUrl + '#');
     markdown = markdown.replace('guidelines:guideline:', guidelinesUrl + '#');
-    return marked(markdown);
+    let html = marked(markdown);
+    html = html.replace('<a ', `<a ${targetBlank} `);
+    return html;
 }
