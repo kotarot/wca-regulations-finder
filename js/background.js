@@ -6,8 +6,15 @@ const GUIDELINES_URL = 'https://raw.githubusercontent.com/thewca/wca-regulations
 const regulations = {};
 const guidelines = {};
 
+let highlightEnabled = true;
+const iconEnabled = 'icon/icon-enabled-128.png';
+const iconDisabled = 'icon/icon-disabled-128.png';
+
+const titleEnabled = 'WCA Regulations Finder (enabled)';
+const titleDisabled = 'WCA Regulations Finder (disabled)';
+
 const downloadAndCache = (url, cache) => {
-    console.log(`Downloading ${url} ...`);
+    //console.log(`Downloading ${url} ...`);
 
     const req = new XMLHttpRequest();
     req.open('GET', url);
@@ -44,9 +51,9 @@ downloadAndCache(GUIDELINES_URL, guidelines);
 
 // Response Regulations/Guidelines.
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    console.log('Getting a request ...');
-    console.log(request);
-    console.log(sender);
+    //console.log('Getting a request ...');
+    //console.log(request);
+    //console.log(sender);
 
     if (request.want === 'all') {
         sendResponse({
@@ -67,5 +74,20 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             };
         }
         sendResponse(results);
+    }
+});
+
+// Event on the extension button clicked...
+chrome.browserAction.onClicked.addListener((tab) => {
+    if (highlightEnabled) {
+        highlightEnabled = false;
+        chrome.browserAction.setIcon({path: iconDisabled});
+        chrome.browserAction.setTitle({title: titleDisabled});
+        chrome.tabs.sendMessage(tab.id, 'disable');
+    } else {
+        highlightEnabled = true;
+        chrome.browserAction.setIcon({path: iconEnabled});
+        chrome.browserAction.setTitle({title: titleEnabled});
+        chrome.tabs.sendMessage(tab.id, 'enable');
     }
 });

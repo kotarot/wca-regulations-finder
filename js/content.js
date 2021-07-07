@@ -153,7 +153,18 @@ chrome.runtime.sendMessage({want: 'all'}, (response) => {
 });
 
 
+chrome.extension.onMessage.addListener((request, sender, sendResponse) => {
+    if (request === 'enable') {
+        alert('enabling');
+    } else {
+        alert('disabling');
+    }
+});
+
+
+// ================================
 // Functions:
+// ================================
 
 // Checks overlap
 const checkOverlap = (start, end, ranges) => {
